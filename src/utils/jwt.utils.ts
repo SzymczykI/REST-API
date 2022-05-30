@@ -1,5 +1,6 @@
 import jwt from "jsonwebtoken";
 import config from "config";
+import { boolean } from "zod";
 
 const privateKey = config.get<string>('privateKey');
 const publicKey = config.get<string>("publicKey");
@@ -14,7 +15,7 @@ export const signJwt = (
   });
 };
 
-export const verifyJwt = (token: string) => {
+export const verifyJwt = (token:  any) => {
   try {
     const decoded = jwt.verify(token, publicKey);
     return {
