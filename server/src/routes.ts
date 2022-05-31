@@ -8,9 +8,9 @@ import {
 import {
   createUserSessionHandler,
   deleteSessionHandler,
-  getUserSessionHandler,
+  getUserSessionsHandler,
 } from "./controller/session.controller";
-import { createUserHandler } from "./controller/user.controller";
+import { createUserHandler, getCurrentUser } from "./controller/user.controller";
 import requireUser from "./middleware/requireUser";
 import validateResource from "./middleware/validateResource";
 import {
@@ -29,13 +29,15 @@ const routes = (app: Express) => {
 
   app.post("/api/users", validateResource(createUserSchema), createUserHandler);
 
+  app.get("/api/me", requireUser, getCurrentUser);
+
   app.post(
     "/api/sessions",
     validateResource(createSessionSchema),
     createUserSessionHandler
   );
 
-  app.get("api/sessions", requireUser, getUserSessionHandler);
+  app.get("api/sessions", requireUser, getUserSessionsHandler);
   app.delete("api/sessions", requireUser, deleteSessionHandler);
 
   app.post(

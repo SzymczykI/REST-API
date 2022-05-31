@@ -3,6 +3,7 @@ import { object, string, TypeOf } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import axios from "axios";
 import { useState } from "react";
+import { useRouter } from "next/router";
 
 const createUserSchema = object({
   name: string({
@@ -27,6 +28,8 @@ const createUserSchema = object({
 type CreateUserInput = TypeOf<typeof createUserSchema>;
 
 const RegisterPage = () => {
+  const router = useRouter();
+
   const [registerError, setRegisterError] = useState(null);
 
   const {
@@ -43,6 +46,7 @@ const RegisterPage = () => {
         `${process.env.NEXT_PUBLIC_SERVER_ENDPOINT}/api/users`,
         values
       );
+      router.push("/");
     } catch (e) {
       setRegisterError(e.message);
     }
@@ -60,7 +64,7 @@ const RegisterPage = () => {
             placeholder="john.doe@example.com"
             {...register("email")}
           />
-          <p>{errors.email?.message}</p>
+          <p>{registerError}</p>
         </div>
 
         <div className="form-element">
@@ -71,7 +75,7 @@ const RegisterPage = () => {
             placeholder="John Doe"
             {...register("name")}
           />
-          <p>{errors.name?.message}</p>
+          <p>{registerError}</p>
         </div>
 
         <div className="form-element">
@@ -82,7 +86,7 @@ const RegisterPage = () => {
             placeholder="*********"
             {...register("password")}
           />
-          <p>{errors.password?.message}</p>
+          <p>{registerError}</p>
         </div>
 
         <div className="form-element">
