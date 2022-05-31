@@ -2,7 +2,7 @@
 Client-server architecture model base for e-commerce application
  </h2> 
 <h3>
-Using: 
+Techstack: 
 REST API with Node.js, Express, TypeScript, MongoDB, Zod &amp; UI with React, Next.js, SWR, Axios, react-hook-form
 </h3>
 <p>
